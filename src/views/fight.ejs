@@ -1,0 +1,96 @@
+<%- include('header') %>
+
+<% if(finished) { %>
+    <section class="winner-banner">
+        Ganador: <%= winner %> SuperHeroe (<%= winner_role %>)
+    </section>
+<% } %>
+
+<h1>Batalla de SuperHeroes</h1>
+<section class="battle-container">
+    <div class="hero-card">
+        <h2><%= fighter_one.name %></h2>
+
+        <div class="hp-box">
+            <span class="hp-label">HP</span>
+            <span class="hp-value"><%= Math.round(fighter_one.vitality) %></span>
+        </div>
+    </div>
+
+    <div class="versus">VS</div>
+
+    <div class="hero-card">
+        <h2><%= fighter_two.name %></h2>
+
+        <div class="hp-box">
+            <span class="hp-label">HP</span>
+            <span class="hp-value"><%= Math.round(fighter_two.vitality) %></span>
+        </div>
+    </div>
+</section>
+
+<% if(!finished) { %>
+<div class="fight-controls">
+    <div class="luck-bar">
+        <span class="luck-current">
+            Jugador <strong><%= attacker_luck %></strong>
+        </span>
+        <span>|</span>
+        <span class="luck-current">
+            Rival <strong><%= defender_luck %></strong>
+        </span>
+
+        <% if(pending_attacker_luck !== null && pending_attacker_luck !== undefined) { %>
+            <span class="luck-pending">
+                Nueva tirada → Jugador <strong><%= pending_attacker_luck %></strong>
+                / Rival <strong><%= pending_defender_luck %></strong>
+            </span>
+            <form class="luck-form" action="/fight/luck/accept" method="post">
+                <button type="submit" class="luck-btn accept-luck">Aceptar</button>
+            </form>
+            <form class="luck-form" action="/fight/luck/reject" method="post">
+                <button type="submit" class="luck-btn reject-luck">Rechazar</button>
+            </form>
+
+        <% } else if(!luck_used_this_turn) { %>
+            <form class="luck-form" action="/fight/luck" method="post">
+                <button type="submit" class="luck-btn roll-luck">🎲 Tirar suerte</button>
+            </form>
+
+        <% } else { %>
+            <span class="luck-used">✓ Suerte ya tirada</span>
+        <% } %>
+    </div>
+</div>
+<% } %>
+<% if(finished) { %>
+    <section class="winner-box">
+        <h2>Vencedor: <%= winner %></h2>
+
+        <a href="/choose-character" class="button-chose-character">
+            Nueva batalla
+        </a>
+    </section>
+<% } else { %>
+    <form action="/fight/next" method="post" class="next-turn-form">
+        <button type="submit" class="button-chose-character">
+            Nuevo turno
+        </button>
+    </form>
+<% } %>
+
+<section class="battle-events">
+    <h3>Historial de batalla</h3>
+
+    <% if(events && events.length > 0) { %>
+        <ul>
+            <% for(let event of events) { %>
+                <li><%= event %></li>
+            <% } %>
+        </ul>
+    <% } else { %>
+        <p>La batalla está por comenzar.</p>
+    <% } %>
+</section>
+
+<%- include('footer') %>

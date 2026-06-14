@@ -1,0 +1,30 @@
+<%- include('header') %>
+
+    <h1 class="h1">ELIJA A SU HÉROE Y PREPARESE PARA PELEAR</h1>
+    <div class="local-form">
+    <form action="/start-fight" method="get">
+    <table class="table bg-info">
+        <tr>
+            <th>
+                <h2 class="h2-hero">PERSONAJE PRINCIPAL</h2>
+            </th>
+        </tr>
+        <tr>
+            <td>
+                <label for="player">Elegí tu Héroe</label>
+                <select name="player" id="player">
+                    <% for(let hero of hero_db) { %>
+                        <option value="<%= hero.getName() %>">
+                            <%= hero.getName() %>
+                        </option>
+                    <% } %>
+                </select>
+                <button type="submit" class="button-chose-character">
+                    Elegir Héroe
+                </button>
+            </td>
+        </tr>
+    </table>
+    </form>
+</div>
+<%- include('footer') %>

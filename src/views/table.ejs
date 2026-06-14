@@ -1,0 +1,20 @@
+<%- include('header') %>
+
+<h1 class="h1">TABLA DE PERSONAJES</h1>
+    
+    <table class="table bg-info">
+        <thead cellpadding="1.0" cellspacing="1.0">
+            <tr>
+                <th>Nombre</th>         
+                <th>Vida</th>
+            </tr>
+            <% for(let row of data) { %>
+            <tr>
+                <td><%= row.getName() %></td>
+                <td><%= row.getVitality() %></td>
+            </tr>
+            <% } %>
+        </thead>
+    </table>
+
+<%- include('footer') %>
